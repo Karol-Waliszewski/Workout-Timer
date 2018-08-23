@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Workout Timer</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <h1 class="heading" id="title">Front lever holds</h1>
+      <div class="timer" id="progress">
+        <p class="timer__time">
+          <span id="minutes">0</span>:<span id="seconds" />00<span>
+      </p>
+    </div>
+    <div class="controls">
+      <button class="controls__button" id="reset">x</button>
+      <button class="controls__button" id="toggle">></button>
+    </div>
+
+    <div class="stats">
+      <p class="stats__text">Loops: <span>2</span>/<span>4</span></p>
+      </div>
+      <div class="next">
+        <div>
+          <p class="next__text--small">Next</p>
+          <p class="next__text" id="next">Rest</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/progressbar.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+</body>
+
+</html>
