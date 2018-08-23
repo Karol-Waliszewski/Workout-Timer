@@ -76,27 +76,45 @@ function Timer({
   minutes,
   seconds,
   id,
-  color
+  color,
+  queue
 }) {
-  const progressBarId = id;
-  const $title = document.getElementById("title");
 
+  // DOM
+  const $title = document.getElementById("title");
+  const $next = document.getElementById("next");
+  const $currentExercise = document.getElementById("currentExercise");
+  const $exerciseAmount = document.getElementById("exerciseAmount");
+
+  // Variables
   var countDown,
     progress,
     running = false,
     clock = null,
     callback = null,
-    ms = 0,m,s;
+    ms = 0,
+    m, s,
+    queue = queue,
+    index = 0,
+    rests = queue.filter(exercise => exercise.title.toLowerCase() == 'rest').length;
 
-  var updateTimer = function({
-    minutes,
-    seconds,
-    title
-  }) {
-    $title.innerHTML = title || $title.innerHTML;
-    m = minutes % 60 + parseInt(seconds / 60) || 0,
-      s = seconds % 60 || 30;
+  const progressBarId = id;
+
+  // Methods
+  var moveQueue = function() {
+    if (index < queue.length) {
+      $title.innerHTML = queue[index].title || $title.innerHTML;
+      $next.innerHTML = (typeof queue[index + 1] == 'undefined') ? "Finish" : queue[index + 1].title;
+      m = queue[index].minutes % 60 + parseInt(queue[index].seconds / 60) || 0,
+        s = queue[index].seconds % 60 || 30;
       countDown.updateTimer(m, s);
+      $currentExercise.innerHTML = queue.filter((exercise,i) => exercise.title.toLowerCase() != 'rest' && i <= index).length;
+      return true;
+    }else {
+      index = 0;
+      moveQueue();
+      return false;
+    }
   }
 
   var start = function(cb) {
@@ -106,16 +124,16 @@ function Timer({
     });
 
     running = true;
-    console.log('start')
     clock = setInterval(function() {
       ms += 5;
     }, 5);
 
     callback = setTimeout(function() {
       clearInterval(clock);
-      updateTimer({seconds:10,title:"REST"});
+      index++;
       reset();
-      start();
+      if(moveQueue())
+        start();
 
     }, 1000 * (s + m * 60) - ms)
 
@@ -125,7 +143,6 @@ function Timer({
     countDown.stop();
     progress.stop();
     running = false;
-    console.log('stop');
     clearInterval(clock);
     clearTimeout(callback);
     clock = null;
@@ -157,7 +174,8 @@ function Timer({
         display: "block"
       }
     });
-    updateTimer({minutes,seconds});
+    $exerciseAmount.innerHTML = queue.length - rests;
+    moveQueue();
   }
 
   init();
@@ -171,9 +189,32 @@ function Timer({
 }
 
 let t = new Timer({
-  minutes: 0,
-  seconds: 2,
-  id: "progress"
+  id: "progress",
+  queue: [{
+    minutes: 0,
+    seconds: 3,
+    title: "Front Lever Raises"
+  }, {
+    minutes: 0,
+    seconds: 2,
+    title: "Rest"
+  }, {
+    minutes: 0,
+    seconds: 3,
+    title: "Front Lever Holds"
+  },{
+    minutes: 0,
+    seconds: 3,
+    title: "Front Lever Holdzz"
+  },{
+    minutes: 0,
+    seconds: 2,
+    title: "Rest"
+  }, {
+    minutes: 0,
+    seconds: 3,
+    title: "Front Lever Raises"
+  }]
 });
 
 document.getElementById("reset").addEventListener('click', t.reset);

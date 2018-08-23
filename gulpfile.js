@@ -11,7 +11,7 @@ const gulp = require('gulp'),
 
 // ------- EDIT SECTION ------- //
 
-var distDir = 'dist',a
+var distDir = 'dist',
   buildDir = 'docs',
   srcDir = 'src';
 
