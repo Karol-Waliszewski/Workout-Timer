@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  outline: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.header {
+  height: 21vh;
+  width: 100%;
+  background: linear-gradient(to left,#1FD989,#56A5E1);
+  box-shadow: 0 0 15px rgba(0,0,0,0.35);
+  border-radius: 0 0 5px 5px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 26px;
+}
+
+.header__heading {
+  font-weight: 500;
+  font-size: 4.95vh;
+  line-height: 4.1vh;
+  margin: {
+    top: 1.3vh;
+    bottom: 1.82vh;
+  }
+}
+
+.header__stats {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.container {
+  padding: 2rem 1.5rem;
+}
+
+.workout {
+  width: 100%;
+  height: 10.5vh;
+  min-height: 60px;
+  margin-bottom: 2rem;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: {
+    right: 1.4rem;
+    left: 1.1rem;
+  }
+  transition: 250ms;
+
+  &.active {
+    padding-left: calc(1.1rem + 30px);
+
+    .workout__more {
+      width: 36px;
+      padding: 0 6px;
+      align-items: center;
+    }
+  }
+}
+
+.workout__more {
+  display: block;
+  height: 100%;
+  width: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  overflow: hidden;
+  padding-left: 6px;
+  background: linear-gradient(#1FD989,#56A5E1);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: 250ms;
+
+}
+
+.workout__title {
+  font-weight: 400;
+  font-size: 2.6vh;
+  color: #2D2B3D;
+  letter-spacing: 0.4px;
+}
+
+.workout__time {
+  font-size: 14px;
+
+  span {
+    font-size: inherit;
+  }
+}
+
+.workout__button {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(#1FD989,#56A5E1);
+  color: #fff;
+}
+
+.actionButton {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(#1FD989,#56A5E1);color: #fff;
+  font-size: 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}

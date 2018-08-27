@@ -5,40 +5,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500" rel="stylesheet">
+  <link rel="stylesheet" href="css/home.css">
   <title>Workout Timer</title>
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="container">
-      <h1 class="heading" id="title">Exercise</h1>
-      <div class="timer" id="progress">
-        <p class="timer__time">
-          <span id="minutes">0</span>:<span id="seconds" />00<span>
-      </p>
-    </div>
-    <div class="controls">
-      <button class="controls__button" id="reset">x</button>
-      <button class="controls__button" id="toggle">></button>
-    </div>
-
-    <div class="stats">
-      <p class="stats__text">Exercise: <span id="currentExercise">2</span>/<span id="exerciseAmount">4</span></p>
-      </div>
-      <div class="next">
+  <header class="header">
+    <h1 class="header__heading">Good <br> Morning</h1>
+    <p class="header__stats">Finished Workouts: <span>153</span></p>
+  </header>
+  <main class="container">
+    <ul>
+      <li class="workout">
+        <div class="workout__more"><p>1</p><p>2</p></div>
         <div>
-          <p class="next__text--small">Next</p>
-          <p class="next__text" id="next">Rest</p>
+          <h2 class="workout__title">Training Name</h2>
+          <div class="workout__time">
+            <img src="" alt="" class="workout__timer">
+            <span>13:30</span>
+          </div>
         </div>
-      </div>
-    </div>
+        <button class="workout__button">></button>
+      </li>
+      <li class="workout">
+        <div class="workout__more"></div>
+        <div>
+          <h2 class="workout__title">Training Name</h2>
+          <div class="workout__time">
+            <img src="" alt="" class="workout__timer">
+            <span>13:30</span>
+          </div>
+        </div>
+        <button class="workout__button">></button>
+      </li>
+      <li class="workout">
+        <div class="workout__more"></div>
+        <div>
+          <h2 class="workout__title">Training Name</h2>
+          <div class="workout__time">
+            <img src="" alt="" class="workout__timer">
+            <span>13:30</span>
+          </div>
+        </div>
+        <button class="workout__button">></button>
+      </li>
+      <li class="workout">
+        <div class="workout__more"></div>
+        <div>
+          <h2 class="workout__title">Training Name</h2>
+          <div class="workout__time">
+            <img src="" alt="" class="workout__timer">
+            <span>13:30</span>
+          </div>
+        </div>
+        <button class="workout__button">></button>
+      </li>
+    </ul>
+  </main>
+  <footer>
+    <button class="actionButton">+</button>
+  </footer>
 
-  </div>
-
-  <script src="js/progressbar.js"></script>
-  <script type="text/javascript" src="js/script.js"></script>
+  <script>
+    var el = document.querySelector('.workout');
+    el.addEventListener('click',function () {
+      el.classList.toggle('active');
+    })
+    var ell = document.querySelector('.workout__button');
+    ell.addEventListener('click',function (e) {
+      e.stopPropagation();
+    })
+  </script>
 </body>
 
 </html>

@@ -1,3 +1,7 @@
+const ProgressBar = require('progressbar.js');
+const Sortable = require('sortablejs');
+
+
 function CountDown(m, s) {
   var $minutes = document.getElementById('minutes');
   var $seconds = document.getElementById('seconds');
@@ -99,6 +103,7 @@ function Timer({
     rests = queue.filter(exercise => exercise.title.toLowerCase() == 'rest').length;
 
   const progressBarId = id;
+  const audio = new Audio("../audio/beep.mp3");
 
   // Methods
   var moveQueue = function() {
@@ -106,11 +111,11 @@ function Timer({
       $title.innerHTML = queue[index].title || $title.innerHTML;
       $next.innerHTML = (typeof queue[index + 1] == 'undefined') ? "Finish" : queue[index + 1].title;
       m = queue[index].minutes % 60 + parseInt(queue[index].seconds / 60) || 0,
-        s = queue[index].seconds % 60 || 30;
+        s = ('seconds' in queue[index]) ? queue[index].seconds % 60 : 30;
       countDown.updateTimer(m, s);
-      $currentExercise.innerHTML = queue.filter((exercise,i) => exercise.title.toLowerCase() != 'rest' && i <= index).length;
+      $currentExercise.innerHTML = queue.filter((exercise, i) => exercise.title.toLowerCase() != 'rest' && i <= index).length;
       return true;
-    }else {
+    } else {
       index = 0;
       moveQueue();
       return false;
@@ -130,9 +135,10 @@ function Timer({
 
     callback = setTimeout(function() {
       clearInterval(clock);
+      audio.play();
       index++;
       reset();
-      if(moveQueue())
+      if (moveQueue())
         start();
 
     }, 1000 * (s + m * 60) - ms)
@@ -202,18 +208,18 @@ let t = new Timer({
     minutes: 0,
     seconds: 3,
     title: "Front Lever Holds"
-  },{
+  }, {
     minutes: 0,
     seconds: 3,
     title: "Front Lever Holdzz"
-  },{
+  }, {
     minutes: 0,
     seconds: 2,
     title: "Rest"
   }, {
     minutes: 0,
     seconds: 3,
-    title: "Front Lever Raises"
+    title: "Front Lever Raizez"
   }]
 });
 

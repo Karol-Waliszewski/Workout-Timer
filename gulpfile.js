@@ -6,7 +6,7 @@ const gulp = require('gulp'),
   mozjpeg = require('imagemin-mozjpeg'),
   pngquant = require('imagemin-pngquant'),
   uglify = require('gulp-uglify'),
-  babel = require('gulp-babel'),
+  browserify = require('gulp-browserify'),
   browserSync = require('browser-sync').create();
 
 // ------- EDIT SECTION ------- //
@@ -17,7 +17,7 @@ var distDir = 'dist',
 
 var imageQuality = {
   jpg: 80, // %
-  png: 90  // %
+  png: 90 // %
 };
 
 // ----------- END ----------- //
@@ -33,7 +33,9 @@ gulp.task('css-dev', () => {
 
 gulp.task('css-build', () => {
   return gulp.src(`${srcDir}/sass/**/*.scss`)
-    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(sass({
+      outputStyle: 'compressed'
+    }).on('error', sass.logError))
     .pipe(purify([`${srcDir}/js/**/*.js`, `${srcDir}/*.html`], {
       minify: true
     }))
@@ -42,12 +44,11 @@ gulp.task('css-build', () => {
 });
 
 gulp.task('js-dev', () => {
-  return gulp.src(`${srcDir}/js/**/*.js`)
-    .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: ['env']
+  return gulp.src(`${srcDir}/js/**/script.js`)
+    .pipe(browserify({
+      insertGlobals: true,
+      debug: !gulp.env.production
     }))
-    .pipe(sourcemaps.write(`./maps`))
     .pipe(gulp.dest(`${distDir}/js`));
 });
 
@@ -63,6 +64,11 @@ gulp.task('js-build', () => {
 gulp.task('html', () => {
   return gulp.src(`${srcDir}/*.html`)
     .pipe(gulp.dest(distDir));
+});
+
+gulp.task('audio', () => {
+  return gulp.src(`${srcDir}/audio/*.*`)
+    .pipe(gulp.dest(`${distDir}/audio`));
 });
 
 gulp.task('fonts', () => {
@@ -101,7 +107,7 @@ gulp.task('server', () => {
   });
 });
 
-gulp.task('copy', ['html', 'fonts', 'img']);
+gulp.task('copy', ['html', 'fonts', 'img', 'audio']);
 
 gulp.task('watch', () => {
   gulp.watch(`${srcDir}/sass/**/*.scss`, ['css-dev']);
