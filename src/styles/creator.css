@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  outline: none; }
+
+ol {
+  list-style-type: none; }
+
+.header__textarea {
+  margin-top: 1.3vh;
+  margin-bottom: 1.82vh; }
+  .header__textarea textarea {
+    color: #fff;
+    background: none;
+    border: none;
+    font-weight: 500;
+    font-size: 4.95vh;
+    line-height: 4.1vh;
+    width: 60%;
+    resize: none; }
+
+.creator__container {
+  padding: 2rem 1.5rem; }
+
+.creator__workout {
+  width: 100%;
+  height: auto;
+  min-height: 60px;
+  margin-bottom: 2rem;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  padding-left: 6px; }
+  .creator__workout::before {
+    content: "";
+    display: block;
+    background: linear-gradient(#1FD989, #56A5E1);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px; }
+
+.workout__add {
+  height: 9vh;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1.5rem;
+  color: #CECECE; }
+  .workout__add p {
+    font-size: calc(1rem + 0.7vh);
+    font-weight: 500; }
+
+.exercise {
+  height: 9vh;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1.5rem;
+  border-bottom: 1px solid #DFDFDF;
+  background: #fff; }
+
+.exercise__index {
+  color: #DFDFDF;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-right: 1rem; }
+
+.exercise__name {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2D2B3D;
+  width: 90%; }
+
+.exercise__time {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2D2B3D;
+  width: 90%; }
+
+.exercise__button {
+  min-width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(#1FD989, #56A5E1);
+  color: #fff;
+  font-size: 2rem;
+  margin-right: 0.5rem; }
+
+.actionButton {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(#1FD989, #56A5E1);
+  color: #fff;
+  font-size: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }

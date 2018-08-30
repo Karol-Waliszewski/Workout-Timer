@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 // Pages
 import Home from './pages/Home';
 import Timer from './pages/Timer';
+import Creator from './pages/Creator';
 
 class App extends Component {
   constructor() {
@@ -52,7 +53,7 @@ class App extends Component {
   getWorkout(id) {
     for (let workout of this.state.workouts) {
       if (workout.id == id) {
-        return workout
+        return workout;
       }
     }
   }
@@ -79,6 +80,12 @@ class App extends Component {
           getWorkout = {
             this.getWorkout.bind(this)
           } />}/>
+          <Route path="/creator" render={(props) =>
+            <Creator {...props} createdWorkouts={state.workouts.length}/>
+          }/>
+          <Route path="/creator/:index" render={(props) =>
+            <Creator {...props} createdWorkouts={state.workouts.length}/>
+          }/>
       </Switch>
     </Router>);
   }

@@ -10,7 +10,7 @@ import Workout from '../components/Workout';
 import '../styles/home.css';
 import '../styles/modal.css';
 
-Modal.setAppElement('#root')
+Modal.setAppElement('#root');
 
 class Home extends Component {
 
@@ -18,7 +18,8 @@ class Home extends Component {
     super();
     this.state = {
       editMode: false,
-      isModalOpen: false
+      isModalOpen: false,
+      finishedWorkouts: 0
     };
 
     this.modalOpenedBy = null;
@@ -82,9 +83,7 @@ class Home extends Component {
     return (<div className="home">
       <header className="header">
         {greating}
-        <p className="header__stats">Finished Workouts:
-          <span>153</span>
-        </p>
+        <p className="header__stats">Finished Workouts: {state.finishedWorkouts}</p>
         <div className="header__icon">
           <FontAwesomeIcon icon="stopwatch" size="9x"/>
         </div>
