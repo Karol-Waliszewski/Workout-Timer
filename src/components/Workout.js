@@ -13,10 +13,14 @@ class Workout extends Component {
     }
 
     return (
-      <li className="workout">
+      <li className={this.props.active ? "workout active" : "workout"}>
         <div className="workout__more">
-          <button>edit</button>
-          <button>delete</button>
+          <button className="workout__button--more">
+            <FontAwesomeIcon icon="edit"/>
+          </button>
+          <button onClick={()=>this.props.delete(workout.id)} className="workout__button--more">
+            <FontAwesomeIcon icon="trash-alt"/>
+          </button>
         </div>
         <div>
           <h2 className="workout__title">{workout.name}</h2>

@@ -7,14 +7,13 @@ class Countdown extends Component {
     super(props);
     this.state = {
       startTime: this.props.time || 5,
-      time:  this.props.time || 5,
-      clock: null,
+      time: this.props.time || 5,
+      clock: null
     }
-    this.ms = 0
-    console.log('test')
+    this.ms = 0;
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.progressBar = new ProgressBar.Circle(document.getElementById('progress'), {
       strokeWidth: 3,
       color: '#FFFFFF',
@@ -27,11 +26,13 @@ class Countdown extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState( {
-      startTime: nextProps.time || 5,
-      time: nextProps.time || 5,
-    })
+  componentWillReceiveProps(nextProps) {
+    if (this.state.startTime != nextProps.time) {
+      this.setState({
+        startTime: nextProps.time || 5,
+        time: nextProps.time || 5
+      });
+    }
   }
 
   countDown() {
@@ -40,33 +41,33 @@ class Countdown extends Component {
     var ms = this.ms;
     if (ms % 250 == 0 && ms != 0) {
       if (state.time > 0) {
-          this.setState({
-          time: state.time-1,
+        this.setState({
+          time: state.time - 1
         });
       }
     }
-    if(state.time == 0){
+    if (state.time == 0) {
       this.pause();
       this.props.onFinish();
     }
   }
 
-  start(){
+  start() {
     clearInterval(this.state.clock);
-    this.state.clock = setInterval(this.countDown.bind(this),4);
-    this.progressBar.animate(1,{duration: 1000 * (this.state.startTime) * (1 - this.progressBar.value())})
+    this.state.clock = setInterval(this.countDown.bind(this), 4);
+    this.progressBar.animate(1, {
+      duration: 1000 * (this.state.startTime) * (1 - this.progressBar.value())
+    })
   }
 
   pause() {
     clearInterval(this.state.clock);
     this.state.clock = null;
-      this.progressBar.stop();
+    this.progressBar.stop();
   }
 
-  reset(){
-    this.setState({
-      time:this.state.startTime
-    })
+  reset() {
+    this.setState({time: this.state.startTime})
     this.ms = 0;
     this.progressBar.set(0);
   }
@@ -76,7 +77,11 @@ class Countdown extends Component {
 
     return (<div className="timer" id="progress">
       <p className="timer__time">
-        {parseInt(state.time / 60)}:{(state.time % 60 < 10) ? "0" + state.time % 60 : state.time % 60}
+        {parseInt(state.time / 60)}:{
+          (state.time % 60 < 10)
+            ? "0" + state.time % 60
+            : state.time % 60
+        }
       </p>
     </div>);
   }

@@ -47,7 +47,7 @@ ul {
   transform: rotate(-25deg);
 }
 
-.container {
+.home__container {
   padding: 2rem 1.5rem;
 }
 
@@ -73,7 +73,9 @@ ul {
     .workout__more {
       width: 36px;
       padding: 0 6px;
-      align-items: center;
+    }
+    .workout__button--more {
+      opacity: 1;
     }
   }
 }
@@ -86,7 +88,7 @@ ul {
   flex-direction: column;
   justify-content: space-around;
   overflow: hidden;
-  padding-left: 6px;
+  align-items: center;
   background: linear-gradient(#1FD989,#56A5E1);
   position: absolute;
   left: 0;
@@ -123,13 +125,32 @@ ul {
   border-radius: 50%;
   background: linear-gradient(#1FD989,#56A5E1);
   color: #fff;
+  cursor: pointer;
 }
 
-.actionButton {
+.workout__button--more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: none;
+  color: #fff;
+  opacity: 0;
+  transition: 250ms;
+    cursor: pointer;
+}
+
+.actionButtons {
   position: fixed;
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.actionButtons__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 50px;
   height: 50px;
   border: none;
@@ -138,4 +159,8 @@ ul {
   color: #fff;
   font-size: 2rem;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  margin: {
+    left: 0.5rem;
+    right: 0.5rem;
+  }
 }

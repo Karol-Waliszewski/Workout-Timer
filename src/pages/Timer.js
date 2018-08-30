@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import Countdown from '../components/Countdown';
@@ -60,6 +61,9 @@ class Timer extends Component {
 
     return (<div className="wrapper">
       <div className="container">
+        <Link to="/" className="backArrow" onClick={this.pause}>
+          <FontAwesomeIcon icon="arrow-left" size="lg"/>
+        </Link>
         <h1 className="heading" id="title">{workout.exercises[state.currentIndex].name}</h1>
         <Countdown ref={this.countDown} onFinish={this.onFinish.bind(this)} time={workout.exercises[state.currentIndex].time}/>
         <div className="controls">

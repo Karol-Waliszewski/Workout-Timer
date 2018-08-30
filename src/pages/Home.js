@@ -1,17 +1,63 @@
 import React, {Component} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {Link} from 'react-router-dom';
+import Modal from 'react-modal';
+
+// Components
 import Workout from '../components/Workout';
 
 // Styles
 import '../styles/home.css';
+import '../styles/modal.css';
+
+Modal.setAppElement('#root')
 
 class Home extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      editMode: false,
+      isModalOpen: false
+    };
+
+    this.modalOpenedBy = null;
+
+    this.toggleEdit = this.toggleEdit.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
+  }
+
+  toggleEdit() {
+    this.setState({
+      editMode: !this.state.editMode
+    });
+  }
+
+  openModal() {
+    this.setState({isModalOpen: true});
+  }
+
+  closeModal() {
+    this.setState({isModalOpen: false});
+  }
+
+  confirmDelete() {
+    this.closeModal();
+    this.props.deleteWorkout(this.modalOpenedBy);
+    this.modalOpenedBy = null;
+  }
+
   render() {
     var {
-      props
+      props,
+      state
     } = this;
     if ('workouts' in props) {
-      var workouts = props.workouts.map((workout, index) => <Workout workout={workout} key={index}/>)
+      var workouts = props.workouts.map((workout, index) => <Workout workout={workout} key={workout.id} active={this.state.editMode} delete={() => {
+          this.openModal();
+          this.modalOpenedBy = workout.id;
+        }}/>)
     }
     var greating;
     var currentTime = new Date().getHours();
@@ -33,7 +79,7 @@ class Home extends Component {
         Night</h1>;
     }
 
-    return (<div>
+    return (<div className="home">
       <header className="header">
         {greating}
         <p className="header__stats">Finished Workouts:
@@ -43,14 +89,24 @@ class Home extends Component {
           <FontAwesomeIcon icon="stopwatch" size="9x"/>
         </div>
       </header>
-      <main className="container">
+      <main className="home__container">
         <ul>{workouts && workouts}</ul>
       </main>
-      <footer>
-        <button className="actionButton">
-          <FontAwesomeIcon icon="plus" size="sm" fixedWidth={true}/>
+      <footer className="actionButtons">
+        <button onClick={this.toggleEdit} className="actionButtons__button">
+          <FontAwesomeIcon icon="bars" size="xs" fixedWidth={true}/>
         </button>
+        <Link to="/creator" className="actionButtons__button">
+          <FontAwesomeIcon icon="plus" size="xs" fixedWidth={true}/>
+        </Link>
       </footer>
+      <Modal className="modal--home" isOpen={state.isModalOpen} closeTimeoutMS={300}>
+        <h2 className="modal__heading">Do you want to delete this workout?</h2>
+        <footer className="modal__footer">
+          <button onClick={this.confirmDelete} className="modal__button--accept">Yes</button>
+          <button onClick={this.closeModal} className="modal__button--decline">No</button>
+        </footer>
+      </Modal>
     </div>);
   }
 }
