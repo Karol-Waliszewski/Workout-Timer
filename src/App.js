@@ -47,7 +47,10 @@ class App extends Component {
           ]
         }
       ]
-    }
+    };
+
+    this.saveWorkout = this.saveWorkout.bind(this);
+    this.deleteWorkout = this.deleteWorkout.bind(this);
   }
 
   getWorkout(id) {
@@ -56,6 +59,23 @@ class App extends Component {
         return workout;
       }
     }
+  }
+
+  saveWorkout(workout) {
+    var found = false;
+    let workouts = this.state.workouts.map(w => {
+      if (w.id == workout.id) {
+        found = true;
+        return workout;
+      } else {
+        return w;
+      }
+
+    });
+    if (!found) {
+      workouts.push(workout);
+    }
+    this.setState({workouts});
   }
 
   deleteWorkout(id) {
@@ -73,19 +93,18 @@ class App extends Component {
       <Switch>
         <Route path="/" exact={true} render={() =>< Home workouts = {
             state.workouts
-          } deleteWorkout={this.deleteWorkout.bind(this)} />}/>
-        <Route path="/timer/:index" render={(props) =>< Timer {
+          }
+          deleteWorkout = {
+            this.deleteWorkout
+          } />}/>
+        <Route path="/timer/:id" render={(props) =>< Timer {
             ...props
           }
           getWorkout = {
             this.getWorkout.bind(this)
           } />}/>
-          <Route path="/creator" render={(props) =>
-            <Creator {...props} createdWorkouts={state.workouts.length}/>
-          }/>
-          <Route path="/creator/:index" render={(props) =>
-            <Creator {...props} createdWorkouts={state.workouts.length}/>
-          }/>
+        <Route path="/creator/:id" render={(props) => <Creator {...props} createdWorkouts={state.workouts.length} saveWorkout={this.saveWorkout} getWorkout={this.getWorkout.bind(this)}/>}/>
+        <Route path="/creator" render={(props) => <Creator {...props} createdWorkouts={state.workouts.length} saveWorkout={this.saveWorkout}/>}/>
       </Switch>
     </Router>);
   }

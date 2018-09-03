@@ -2,11 +2,14 @@ import React, {Component} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Link} from 'react-router-dom';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
+import Modal from 'react-modal';
 
 import Exercise from '../components/Exercise';
 
 // Styles
 import "../styles/creator.css";
+
+var createHash = require('hash-generator');
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -22,9 +25,10 @@ class Creator extends Component {
   constructor() {
     super();
     this.state = {
-      id: 'grgrggrgr',
+      id: createHash(10),
       name: "Workout's title",
-      exercises: []
+      exercises: [],
+      isModalOpen: false
     };
 
     this.updateTime = this.updateTime.bind(this);
@@ -33,6 +37,32 @@ class Creator extends Component {
     this.deleteExercise = this.deleteExercise.bind(this);
 
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+
+    this.saveWorkout = this.saveWorkout.bind(this);
+  }
+
+  componentDidMount() {
+    let {props} = this;
+    if ("id" in props.match.params) {
+      let {id, name, exercises} = props.getWorkout(props.match.params.id);
+      this.setState({id, name, exercises});
+    }
+  }
+
+  saveWorkout(e) {
+    let {id, exercises, name} = this.state;
+    if (exercises.length == 0) {
+      this.openModal();
+      e.preventDefault();
+      return;
+    }
+    let workout = {
+      id,
+      exercises,
+      name
+    };
+    this.props.saveWorkout(workout);
   }
 
   updateName(index, name) {
@@ -66,18 +96,19 @@ class Creator extends Component {
   }
 
   onDragEnd(result) {
-    // dropped outside the list
     if (!result.destination) {
       return;
     }
-
-    const exercises = reorder(
-      this.state.exercises,
-      result.source.index,
-      result.destination.index
-    );
-
+    const exercises = reorder(this.state.exercises, result.source.index, result.destination.index);
     this.setState({exercises});
+  }
+
+  openModal() {
+    this.setState({isModalOpen: true});
+  }
+
+  closeModal() {
+    this.setState({isModalOpen: false});
   }
 
   render() {
@@ -106,8 +137,7 @@ class Creator extends Component {
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable droppableId="exercises">
               {
-                (provided) => (
-                <ol ref={provided.innerRef} {...provided.droppableProps}>
+                (provided) => (<ol ref={provided.innerRef} {...provided.droppableProps}>
                   {exercises}
                   {provided.placeholder}
                 </ol>)
@@ -125,9 +155,16 @@ class Creator extends Component {
       </main>
       <footer className="actionButtons">
         <Link to="/" className="actionButtons__button">
+          <FontAwesomeIcon icon={"times"} size="xs" fixedWidth={true}/>
+        </Link>
+        <Link to="/" className="actionButtons__button" onClick={this.saveWorkout}>
           <FontAwesomeIcon icon={["far", "save"]} size="xs" fixedWidth={true}/>
         </Link>
       </footer>
+      <Modal className="modal--creator" isOpen={state.isModalOpen} closeTimeoutMS={300}>
+        <h2 className="modal__heading">You have to create at least one exercise.</h2>
+        <button onClick={this.closeModal} className="modal__button--creator">I understand</button>
+      </Modal>
     </div>);
   }
 }

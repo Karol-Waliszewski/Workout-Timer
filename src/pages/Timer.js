@@ -42,7 +42,7 @@ class Timer extends Component {
   onFinish() {
     let {state, props} = this;
 
-    if (state.currentIndex == props.getWorkout(props.match.params.index).exercises.length - 1) {
+    if (state.currentIndex == props.getWorkout(props.match.params.id).exercises.length - 1) {
       this.setState({isRunning: false});
       this.setState({currentIndex: 0});
       this.reset();
@@ -57,7 +57,7 @@ class Timer extends Component {
 
   render() {
     let {state, props} = this;
-    let workout = props.getWorkout(props.match.params.index);
+    let workout = props.getWorkout(props.match.params.id);
 
     return (<div className="wrapper">
       <div className="container">

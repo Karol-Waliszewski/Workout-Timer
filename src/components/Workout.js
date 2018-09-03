@@ -15,9 +15,9 @@ class Workout extends Component {
     return (
       <li className={this.props.active ? "workout active" : "workout"}>
         <div className="workout__more">
-          <button className="workout__button--more">
+          <Link className="workout__button--more" to={"/creator/" + workout.id}>
             <FontAwesomeIcon icon="edit"/>
-          </button>
+          </Link>
           <button onClick={()=>this.props.delete(workout.id)} className="workout__button--more">
             <FontAwesomeIcon icon="trash-alt"/>
           </button>
@@ -29,7 +29,7 @@ class Workout extends Component {
             <span>{parseInt(totalTime / 60)}:{(totalTime % 60 < 10) ? "0" + totalTime % 60 : totalTime % 60}</span>
           </div>
         </div>
-        <Link to={"timer/"+workout.id} className="workout__button">
+        <Link to={"timer/" + workout.id} className="workout__button">
           <FontAwesomeIcon icon="play" size="sm"/>
         </Link>
       </li>);
