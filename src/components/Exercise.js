@@ -65,8 +65,8 @@ class Exercise extends Component {
             <div className="exercise__buttons">
               <svg width="0" height="0">
                 <radialGradient id="rg" r="150%" cx="30%" cy="107%">
-                  <stop stop-color="#56A5E1" offset="0"/>
-                  <stop stop-color="#1FD989" offset="0.9"/>
+                  <stop stopColor="#56A5E1" offset="0"/>
+                  <stop stopColor="#1FD989" offset="0.9"/>
                 </radialGradient>
               </svg>
               <button className="exercise__button" onClick={() => props.copyExercise(props.index)}>

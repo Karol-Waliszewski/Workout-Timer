@@ -53,6 +53,20 @@ class App extends Component {
     this.deleteWorkout = this.deleteWorkout.bind(this);
   }
 
+  async componentWillUpdate(props, state) {
+    try {
+      let db = await indexedDB.open('IntervalTimerKWaliszewski',1);
+      let tx = db.transaction('store');
+      let store = tx.objectStore('store');
+      await store.put(state.workouts, 'workouts');
+      console.log('Put done.');
+      await tx;
+      console.log('COmmited');
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
   getWorkout(id) {
     for (let workout of this.state.workouts) {
       if (workout.id == id) {

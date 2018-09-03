@@ -67,7 +67,7 @@ class Countdown extends Component {
   }
 
   reset() {
-    this.setState({time: this.state.startTime})
+    this.setState({time: this.state.startTime});
     this.ms = 0;
     this.progressBar.set(0);
   }
