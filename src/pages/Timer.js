@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Sound from 'react-sound';
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
@@ -13,8 +14,10 @@ class Timer extends Component {
     // state
     this.state = {
       isRunning: false,
+      isPlaying: 'STOPPED',
       currentIndex: 0
     }
+
     // refs
     this.countDown = React.createRef();
     //this.progressBar = React.createRef();
@@ -30,7 +33,7 @@ class Timer extends Component {
   }
 
   pause() {
-    this.setState({isRunning: false});
+    this.setState({isRunning: false,isPlaying: 'STOPPED'});
     this.countDown.current.pause();
   }
 
@@ -39,9 +42,16 @@ class Timer extends Component {
     this.countDown.current.reset();
   }
 
+  playSound() {
+    let durration = 3 // seconds
+    this.setState({isPlaying: 'PLAYING'});
+    setTimeout(() => {
+      this.setState({isPlaying: 'STOPPED'});
+    }, durration * 1000);
+  }
+
   onFinish() {
     let {state, props} = this;
-
     if (state.currentIndex == props.getWorkout(props.match.params.id).exercises.length - 1) {
       this.setState({isRunning: false});
       this.setState({currentIndex: 0});
@@ -53,6 +63,7 @@ class Timer extends Component {
       this.reset();
       this.start();
     }
+    this.playSound();
   }
 
   render() {
@@ -60,6 +71,10 @@ class Timer extends Component {
     let workout = props.getWorkout(props.match.params.id);
 
     return (<div className="wrapper">
+    <Sound
+     url="https://raw.githubusercontent.com/Karol-Waliszewski/Workout-Timer/master/src/audio/beep.mp3"
+     playStatus={state.isPlaying}
+   />
       <div className="container">
         <Link to="/" className="backArrow" onClick={this.pause}>
           <FontAwesomeIcon icon="arrow-left" size="lg"/>

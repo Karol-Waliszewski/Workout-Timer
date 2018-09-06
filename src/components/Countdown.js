@@ -11,6 +11,7 @@ class Countdown extends Component {
       clock: null
     }
     this.ms = 0;
+
   }
 
   componentDidMount() {
