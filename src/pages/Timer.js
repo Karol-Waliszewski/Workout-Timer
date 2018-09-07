@@ -20,7 +20,6 @@ class Timer extends Component {
 
     // refs
     this.countDown = React.createRef();
-    //this.progressBar = React.createRef();
     // binds
     this.start = this.start.bind(this);
     this.pause = this.pause.bind(this);
@@ -33,7 +32,7 @@ class Timer extends Component {
   }
 
   pause() {
-    this.setState({isRunning: false,isPlaying: 'STOPPED'});
+    this.setState({isRunning: false});
     this.countDown.current.pause();
   }
 

@@ -1,70 +1,100 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Pages
-import Home from './pages/Home';
-import Timer from './pages/Timer';
-import Creator from './pages/Creator';
+import Home from "./pages/Home";
+import Timer from "./pages/Timer";
+import Creator from "./pages/Creator";
+
+// This works on all devices/browsers, and uses IndexedDBShim as a final fallback
+var indexedDB =
+  window.indexedDB ||
+  window.mozIndexedDB ||
+  window.webkitIndexedDB ||
+  window.msIndexedDB ||
+  window.shimIndexedDB;
 
 class App extends Component {
+  state = {
+    workouts: [
+      {
+        id: 1,
+        name: "SUPER FRONT",
+        exercises: [
+          {
+            name: "front",
+            time: 3
+          },
+          {
+            name: "rest",
+            time: 2
+          },
+          {
+            name: "rest",
+            time: 3
+          },
+          {
+            name: "froncik",
+            time: 4
+          },
+          {
+            name: "planche",
+            time: 6
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: "MEGA PLANCHE",
+        exercises: [
+          {
+            name: "front",
+            time: 123
+          },
+          {
+            name: "front",
+            time: 32
+          }
+        ]
+      }
+    ]
+  };
+
   constructor() {
     super();
+    // Open (or create) the database
+    var open = indexedDB.open("WorkoutTimerDatabase");
 
-    this.state = {
-      workouts: [
-        {
-          id: 1,
-          name: 'SUPER FRONT',
-          exercises: [
-            {
-              name: 'front',
-              time: 3
-            }, {
-              name: 'rest',
-              time: 2
-            }, {
-              name: 'rest',
-              time: 3
-            }, {
-              name: 'froncik',
-              time: 4
-            }, {
-              name: 'planche',
-              time: 6
-            }
-          ]
-        }, {
-          id: 2,
-          name: "MEGA PLANCHE",
-          exercises: [
-            {
-              name: 'front',
-              time: 123
-            }, {
-              name: 'front',
-              time: 32
-            }
-          ]
-        }
-      ]
+    // Create the schema
+    open.onupgradeneeded = function() {
+      var db = open.result;
+      var store = db.createObjectStore("WorkoutStore", {
+        keyPath: "id"
+      });
+    };
+
+    open.onsuccess = () => {
+      // Start a new transaction
+      var db = open.result;
+      var tx = db.transaction("WorkoutStore", "readwrite");
+      var store = tx.objectStore("WorkoutStore");
+
+      // Query the data
+      var getAll = store.getAll();
+
+      getAll.onsuccess = () => {
+        //console.log(getJohn.result.name.first); // => "John"
+        this.setState({ workouts: getAll.result });
+      };
+
+      // Close the db when the transaction is done
+      tx.oncomplete = function() {
+        db.close();
+      };
     };
 
     this.saveWorkout = this.saveWorkout.bind(this);
     this.deleteWorkout = this.deleteWorkout.bind(this);
-  }
-
-  async componentWillUpdate(props, state) {
-    try {
-      let db = await indexedDB.open('IntervalTimerKWaliszewski',1);
-      let tx = db.transaction('store');
-      let store = tx.objectStore('store');
-      await store.put(state.workouts, 'workouts');
-      console.log('Put done.');
-      await tx;
-      console.log('COmmited');
-    } catch (err) {
-      console.error(err.message);
-    }
   }
 
   getWorkout(id) {
@@ -84,43 +114,100 @@ class App extends Component {
       } else {
         return w;
       }
-
     });
     if (!found) {
       workouts.push(workout);
     }
-    this.setState({workouts});
+
+    // Open the database
+    var open = indexedDB.open("WorkoutTimerDatabase");
+
+    open.onsuccess = function() {
+      // Start a new transaction
+      var db = open.result;
+      var tx = db.transaction("WorkoutStore", "readwrite");
+      var store = tx.objectStore("WorkoutStore");
+
+      store.put(workout);
+
+      // Close the db when the transaction is done
+      tx.oncomplete = function() {
+        db.close();
+      };
+    };
+
+    this.setState({ workouts });
   }
 
   deleteWorkout(id) {
     this.setState({
       workouts: this.state.workouts.filter(workout => workout.id != id)
     });
+
+    // Open (or create) the database
+    var open = indexedDB.open("WorkoutTimerDatabase");
+
+    open.onsuccess = function() {
+      // Start a new transaction
+      var db = open.result;
+      var tx = db.transaction("WorkoutStore", "readwrite");
+      var store = tx.objectStore("WorkoutStore");
+
+      store.delete(id);
+
+      // Close the db when the transaction is done
+      tx.oncomplete = function() {
+        db.close();
+      };
+    };
   }
 
   render() {
-    var {
-      state
-    } = this;
+    var { state } = this;
 
-    return (<Router>
-      <Switch>
-        <Route path="/" exact={true} render={() =>< Home workouts = {
-            state.workouts
-          }
-          deleteWorkout = {
-            this.deleteWorkout
-          } />}/>
-        <Route path="/timer/:id" render={(props) =>< Timer {
-            ...props
-          }
-          getWorkout = {
-            this.getWorkout.bind(this)
-          } />}/>
-        <Route path="/creator/:id" render={(props) => <Creator {...props} createdWorkouts={state.workouts.length} saveWorkout={this.saveWorkout} getWorkout={this.getWorkout.bind(this)}/>}/>
-        <Route path="/creator" render={(props) => <Creator {...props} createdWorkouts={state.workouts.length} saveWorkout={this.saveWorkout}/>}/>
-      </Switch>
-    </Router>);
+    return (
+      <Router>
+        <Switch>
+          <Route
+            path="/"
+            exact={true}
+            render={() => (
+              <Home
+                workouts={state.workouts}
+                deleteWorkout={this.deleteWorkout}
+              />
+            )}
+          />
+          <Route
+            path="/timer/:id"
+            render={props => (
+              <Timer {...props} getWorkout={this.getWorkout.bind(this)} />
+            )}
+          />
+          <Route
+            path="/creator/:id"
+            render={props => (
+              <Creator
+                {...props}
+                createdWorkouts={state.workouts.length}
+                saveWorkout={this.saveWorkout}
+                getWorkout={this.getWorkout.bind(this)}
+              />
+            )}
+          />
+          <Route
+            path="/creator"
+            render={props => (
+              <Creator
+                {...props}
+                createdWorkouts={state.workouts.length}
+                saveWorkout={this.saveWorkout}
+              />
+            )}
+          />
+        </Switch>
+      </Router>
+    );
   }
 }
 
