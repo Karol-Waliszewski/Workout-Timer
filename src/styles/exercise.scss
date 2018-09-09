@@ -15,17 +15,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-}
-
-.exercise__name {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #2D2B3D;
-  display: flex;
-  flex: 1;
+  width: 90%;
 }
 
 .exercise__index {
@@ -56,11 +46,24 @@
   }
 }
 
+
+.exercise__name {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2D2B3D;
+  display: flex;
+  flex: 1;
+  width: 80%;
+}
+
 .exercise__timer {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex: 1;
+  width: 80%;
 }
 
 .exercise__time {

@@ -16,48 +16,8 @@ var indexedDB =
 
 class App extends Component {
   state = {
-    workouts: [
-      {
-        id: 1,
-        name: "SUPER FRONT",
-        exercises: [
-          {
-            name: "front",
-            time: 3
-          },
-          {
-            name: "rest",
-            time: 2
-          },
-          {
-            name: "rest",
-            time: 3
-          },
-          {
-            name: "froncik",
-            time: 4
-          },
-          {
-            name: "planche",
-            time: 6
-          }
-        ]
-      },
-      {
-        id: 2,
-        name: "MEGA PLANCHE",
-        exercises: [
-          {
-            name: "front",
-            time: 123
-          },
-          {
-            name: "front",
-            time: 32
-          }
-        ]
-      }
-    ]
+    workouts: [],
+    finishedWorkouts: 0
   };
 
   constructor() {
@@ -83,8 +43,7 @@ class App extends Component {
       var getAll = store.getAll();
 
       getAll.onsuccess = () => {
-        //console.log(getJohn.result.name.first); // => "John"
-        this.setState({ workouts: getAll.result });
+        this.setState({ workouts: getAll.result.reverse() });
       };
 
       // Close the db when the transaction is done

@@ -1,18 +1,49 @@
 // React
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Router from 'react-router-dom';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import Router from "react-router-dom";
+import App from "./App";
 
 // PWA
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from "./registerServiceWorker";
 
 // Font Awesome
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faStopwatch,faTrashAlt,faEdit,faCopy,faPlay,faStop,faPause,faPlus,faArrowLeft,faBars,faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faEdit as fasEdit,faSave,faClock } from '@fortawesome/free-regular-svg-icons';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faStopwatch,
+  faTrashAlt,
+  faEdit,
+  faCopy,
+  faPlay,
+  faStop,
+  faPause,
+  faPlus,
+  faArrowLeft,
+  faBars,
+  faTimes
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit as fasEdit,
+  faSave,
+  faClock
+} from "@fortawesome/free-regular-svg-icons";
 
-library.add(faStopwatch,faTrashAlt,faEdit,faCopy,faPlay,faPlus,faStop,faPause,fasEdit,faSave,faClock,faArrowLeft,faBars,faTimes);
+library.add(
+  faStopwatch,
+  faTrashAlt,
+  faEdit,
+  faCopy,
+  faPlay,
+  faPlus,
+  faStop,
+  faPause,
+  fasEdit,
+  faSave,
+  faClock,
+  faArrowLeft,
+  faBars,
+  faTimes
+);
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();
