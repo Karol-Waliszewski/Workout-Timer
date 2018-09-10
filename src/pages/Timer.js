@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Sound from "react-sound";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NoSleep from "nosleep.js";
 
 import Countdown from "../components/Countdown";
 
@@ -17,8 +18,11 @@ class Timer extends Component {
       currentIndex: 0
     };
 
+    this.wakeLock = new NoSleep();
+
     // refs
     this.countDown = React.createRef();
+
     // binds
     this.start = this.start.bind(this);
     this.pause = this.pause.bind(this);
@@ -28,11 +32,13 @@ class Timer extends Component {
   start() {
     this.setState({ isRunning: true });
     this.countDown.current.start();
+    this.wakeLock.enable();
   }
 
   pause() {
     this.setState({ isRunning: false });
     this.countDown.current.pause();
+    this.wakeLock.disable();
   }
 
   reset() {
