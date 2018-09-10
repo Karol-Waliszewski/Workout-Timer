@@ -124,49 +124,14 @@ class App extends Component {
   render() {
     var { state } = this;
 
-    return (
-      <Router>
+    return <Router basename={process.env.PUBLIC_URL}>
         <Switch>
-          <Route
-            path="/"
-            exact={true}
-            render={() => (
-              <Home
-                workouts={state.workouts}
-                deleteWorkout={this.deleteWorkout}
-              />
-            )}
-          />
-          <Route
-            path="/timer/:id"
-            render={props => (
-              <Timer {...props} getWorkout={this.getWorkout.bind(this)} />
-            )}
-          />
-          <Route
-            path="/creator/:id"
-            render={props => (
-              <Creator
-                {...props}
-                createdWorkouts={state.workouts.length}
-                saveWorkout={this.saveWorkout}
-                getWorkout={this.getWorkout.bind(this)}
-              />
-            )}
-          />
-          <Route
-            path="/creator"
-            render={props => (
-              <Creator
-                {...props}
-                createdWorkouts={state.workouts.length}
-                saveWorkout={this.saveWorkout}
-              />
-            )}
-          />
+          <Route path={"/"} exact={true} render={() => <Home workouts={state.workouts} deleteWorkout={this.deleteWorkout} />} />
+          <Route path={"/timer/:id"} render={props => <Timer {...props} getWorkout={this.getWorkout.bind(this)} />} />
+          <Route path={"/creator/:id"} render={props => <Creator {...props} createdWorkouts={state.workouts.length} saveWorkout={this.saveWorkout} getWorkout={this.getWorkout.bind(this)} />} />
+          <Route path={"/creator"} render={props => <Creator {...props} createdWorkouts={state.workouts.length} saveWorkout={this.saveWorkout} />} />
         </Switch>
-      </Router>
-    );
+      </Router>;
   }
 }
 
