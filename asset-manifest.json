@@ -1,10 +1,10 @@
 {
   "runtime~main.js": "/Workout-Timer/static/js/runtime~main.c9ef0906.js",
   "runtime~main.js.map": "/Workout-Timer/static/js/runtime~main.c9ef0906.js.map",
-  "vendors.js": "/Workout-Timer/static/js/vendors.6971a02f.chunk.js",
-  "vendors.js.map": "/Workout-Timer/static/js/vendors.6971a02f.chunk.js.map",
-  "main.css": "/Workout-Timer/static/css/main.eafb0347.chunk.css",
-  "main.js": "/Workout-Timer/static/js/main.4179d4a5.chunk.js",
-  "main.js.map": "/Workout-Timer/static/js/main.4179d4a5.chunk.js.map",
+  "vendors.js": "/Workout-Timer/static/js/vendors.8d51b2a1.chunk.js",
+  "vendors.js.map": "/Workout-Timer/static/js/vendors.8d51b2a1.chunk.js.map",
+  "main.css": "/Workout-Timer/static/css/main.0ae70d0f.chunk.css",
+  "main.js": "/Workout-Timer/static/js/main.401f2ee5.chunk.js",
+  "main.js.map": "/Workout-Timer/static/js/main.401f2ee5.chunk.js.map",
   "index.html": "/Workout-Timer/index.html"
 }
