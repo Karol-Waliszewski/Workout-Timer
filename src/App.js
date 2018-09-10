@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import {Router, Switch, Route } from "react-router-dom";
-import {createBrowserHistory, createHashHistory} from "history";
+import {BrowserRouter, HashRouter, Switch, Route } from "react-router-dom";
+//import {createBrowserHistory, createHashHistory} from "history";
 
 // Pages
 import Home from "./pages/Home";
@@ -15,11 +15,11 @@ var indexedDB =
   window.msIndexedDB ||
   window.shimIndexedDB;
 
-function createHistory() {
-  return window.matchMedia("(display-mode: standalone)").matches
-    ? createHashHistory()
-    : createBrowserHistory();
+function createRouter() {
+  return window.matchMedia("(display-mode: standalone)").matches ? HashRouter : BrowserRouter;
 }
+
+const Router = createRouter();
 
 class App extends Component {
   state = {
@@ -27,7 +27,7 @@ class App extends Component {
     finishedWorkouts: 0
   };
 
-  history = createHistory();
+  //history = createHistory();
 
   constructor() {
     super();
@@ -133,7 +133,7 @@ class App extends Component {
   render() {
     var { state } = this;
 
-    return <Router basename={process.env.PUBLIC_URL} history={this.history}>
+    return <Router basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route path={"/"} exact={true} render={() => <Home workouts={state.workouts} deleteWorkout={this.deleteWorkout} />} />
           <Route path={"/timer/:id"} render={props => <Timer {...props} getWorkout={this.getWorkout.bind(this)} />} />
