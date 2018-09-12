@@ -65,7 +65,8 @@ class App extends Component {
     this.deleteWorkout = this.deleteWorkout.bind(this);
   }
 
-  getWorkout(id) {
+   getWorkout(id) {
+     // TODO: Async getting of workout t oprevent erros
     for (let workout of this.state.workouts) {
       if (workout.id == id) {
         return workout;

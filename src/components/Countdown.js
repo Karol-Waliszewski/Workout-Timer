@@ -1,30 +1,32 @@
-import React, {Component} from 'react';
-import ProgressBar from 'progressbar.js';
+import React, { Component } from "react";
+import ProgressBar from "progressbar.js";
+import * as workerTimers from "worker-timers";
 
 class Countdown extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       startTime: this.props.time || 5,
       time: this.props.time || 5,
       clock: null
-    }
+    };
     this.ms = 0;
-
   }
 
   componentDidMount() {
-    this.progressBar = new ProgressBar.Circle(document.getElementById('progress'), {
-      strokeWidth: 3,
-      color: '#FFFFFF',
-      trailColor: '#FFFFFF',
-      trailWidth: 1,
-      svgStyle: {
-        width: "100%",
-        display: "block"
+    this.progressBar = new ProgressBar.Circle(
+      document.getElementById("progress"),
+      {
+        strokeWidth: 3,
+        color: "#FFFFFF",
+        trailColor: "#FFFFFF",
+        trailWidth: 1,
+        svgStyle: {
+          width: "100%",
+          display: "block"
+        }
       }
-    });
+    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,10 +39,10 @@ class Countdown extends Component {
   }
 
   countDown() {
-    let {state} = this;
+    let { state } = this;
     this.ms++;
     var ms = this.ms;
-    if (ms % 250 == 0 && ms != 0) {
+    if (ms % 200 == 0) {
       if (state.time > 0) {
         this.setState({
           time: state.time - 1
@@ -54,37 +56,38 @@ class Countdown extends Component {
   }
 
   start() {
-    clearInterval(this.state.clock);
-    this.state.clock = setInterval(this.countDown.bind(this), 4);
+    if (this.state.clock != null) {
+      workerTimers.clearInterval(this.state.clock);
+    }
+    this.state.clock = workerTimers.setInterval(this.countDown.bind(this), 4);
     this.progressBar.animate(1, {
-      duration: 1000 * (this.state.startTime) * (1 - this.progressBar.value())
-    })
+      duration: 1000 * this.state.startTime * (1 - this.progressBar.value())
+    });
   }
 
   pause() {
-    clearInterval(this.state.clock);
+    workerTimers.clearInterval(this.state.clock);
     this.state.clock = null;
     this.progressBar.stop();
   }
 
   reset() {
-    this.setState({time: this.state.startTime});
+    this.setState({ time: this.state.startTime });
     this.ms = 0;
     this.progressBar.set(0);
   }
 
   render() {
-    let {state, props} = this;
+    let { state, props } = this;
 
-    return (<div className="timer" id="progress">
-      <p className="timer__time">
-        {parseInt(state.time / 60)}:{
-          (state.time % 60 < 10)
-            ? "0" + state.time % 60
-            : state.time % 60
-        }
-      </p>
-    </div>);
+    return (
+      <div className="timer" id="progress">
+        <p className="timer__time">
+          {parseInt(state.time / 60)}:
+          {state.time % 60 < 10 ? "0" + (state.time % 60) : state.time % 60}
+        </p>
+      </div>
+    );
   }
 }
 

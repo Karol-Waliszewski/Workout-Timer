@@ -3,9 +3,10 @@ import Sound from "react-sound";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NoSleep from "nosleep.js";
+import Push from "push.js";
 
 import Countdown from "../components/Countdown";
-
+import Icon from "../img/icon.png";
 import "../styles/timer.css";
 
 class Timer extends Component {
@@ -71,6 +72,15 @@ class Timer extends Component {
       this.start();
     }
     this.playSound();
+    Push.create(
+      "Workout Timer",
+      {
+          body: `${props.getWorkout(props.match.params.id).exercises[state.currentIndex].name} finished`,
+          icon: Icon,
+          timeout: 6000,
+          vibrate: [100,50,100]
+      }
+    );
   }
 
   render() {
