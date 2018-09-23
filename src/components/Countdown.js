@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ProgressBar from "progressbar.js";
-import * as workerTimers from "worker-timers";
 
 class Countdown extends Component {
   constructor(props) {
@@ -57,16 +56,16 @@ class Countdown extends Component {
 
   start() {
     if (this.state.clock != null) {
-      workerTimers.clearInterval(this.state.clock);
+      clearInterval(this.state.clock);
     }
-    this.state.clock = workerTimers.setInterval(this.countDown.bind(this), 4);
+    this.state.clock = setInterval(this.countDown.bind(this), 4);
     this.progressBar.animate(1, {
       duration: 1000 * this.state.startTime * (1 - this.progressBar.value())
     });
   }
 
   pause() {
-    workerTimers.clearInterval(this.state.clock);
+    clearInterval(this.state.clock);
     this.state.clock = null;
     this.progressBar.stop();
   }
