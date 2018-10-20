@@ -41,7 +41,7 @@ class Countdown extends Component {
     let { state } = this;
     this.ms++;
     var ms = this.ms;
-    if (ms % 200 == 0) {
+    if (ms % 250 == 0) {
       if (state.time > 0) {
         this.setState({
           time: state.time - 1

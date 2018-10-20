@@ -2,16 +2,6 @@ import React, {Component} from 'react';
 import ProgressBar from 'progressbar.js';
 
 class Shape extends Component {
-  defaultProps: {
-    ShapeClass: null,
-    options: {},
-    progress: 0,
-    text: null,
-    initialAnimate: false,
-    containerStyle: {},
-    containerClassName: '.progressbar-container'
-  }
-
   constructor(props) {
     super(props);
 

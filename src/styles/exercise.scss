@@ -7,7 +7,7 @@
     left: 1rem;
     right: 1.5rem;
   }
-  border-bottom: 1px solid #DFDFDF;
+  border-bottom: 1px solid #dfdfdf;
   background: #fff;
 }
 
@@ -15,11 +15,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
+  width: 100%;
 }
 
 .exercise__index {
-  color: #DFDFDF;
+  color: #dfdfdf;
   font-size: 2rem;
   font-weight: 500;
   margin-right: 1rem;
@@ -31,7 +31,6 @@
   align-items: center;
   flex-shrink: 2;
   width: 48px;
-
 }
 
 .exercise__button {
@@ -41,18 +40,17 @@
   font-size: 20px;
   background: none;
   cursor: pointer;
-  svg *{
+  svg * {
     fill: url("#rg");
   }
 }
-
 
 .exercise__name {
   background: none;
   border: none;
   font-size: 1rem;
   font-weight: 500;
-  color: #2D2B3D;
+  color: #2d2b3d;
   display: flex;
   flex: 1;
   width: 80%;
@@ -71,8 +69,13 @@
   border: none;
   font-size: 14px;
   font-weight: 500;
-  color: #2D2B3D;
+  color: #2d2b3d;
   width: 1rem;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 .exercise__time--left {

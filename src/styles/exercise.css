@@ -5,17 +5,17 @@
   align-items: center;
   padding-left: 1rem;
   padding-right: 1.5rem;
-  border-bottom: 1px solid #DFDFDF;
+  border-bottom: 1px solid #dfdfdf;
   background: #fff; }
 
 .exercise__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%; }
+  width: 100%; }
 
 .exercise__index {
-  color: #DFDFDF;
+  color: #dfdfdf;
   font-size: 2rem;
   font-weight: 500;
   margin-right: 1rem; }
@@ -42,7 +42,7 @@
   border: none;
   font-size: 1rem;
   font-weight: 500;
-  color: #2D2B3D;
+  color: #2d2b3d;
   display: flex;
   flex: 1;
   width: 80%; }
@@ -59,8 +59,11 @@
   border: none;
   font-size: 14px;
   font-weight: 500;
-  color: #2D2B3D;
+  color: #2d2b3d;
   width: 1rem; }
+  .exercise__time::-webkit-inner-spin-button, .exercise__time--left::-webkit-inner-spin-button, .exercise__time--right::-webkit-inner-spin-button, .exercise__time::-webkit-outer-spin-button, .exercise__time--left::-webkit-outer-spin-button, .exercise__time--right::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; }
 
 .exercise__time--left {
   text-align: right;
